@@ -17,7 +17,7 @@ const createCardElements = (data) => {
     <a href="#" class="btn btn-primary">Buy</a>
   </div>
 </div>
-    `;
+`;
 };
 
 const dispayWarriorCards = () => {
