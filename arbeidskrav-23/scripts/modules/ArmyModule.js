@@ -36,22 +36,22 @@ const ArmyModule = (() => {
     {
       categoryName: "Cannon",
       priceGold: 100,
-      image: "../../../images/cannon.png",
+      image: "../../images/cannon.png",
     },
     {
       categoryName: "Catapult",
       priceGold: 200,
-      image: "../../images/catapult.png",
+      image: "../images/catapult.png",
     },
     {
       categoryName: "Elehant",
       priceGold: 275,
-      image: "../../images/elehant.png",
+      image: "../images/elehant.png",
     },
     {
       categoryName: "Horse",
       priceGold: 75,
-      image: "../../images/horse.png",
+      image: "../images/horse.png",
     },
   ];
 
