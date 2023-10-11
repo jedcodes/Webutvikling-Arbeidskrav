@@ -1,35 +1,55 @@
+// IMPORTING MODULES
 import ResourcesModule from "../modules/ResourcesModule.js";
+import ArmyModule from "../modules/ArmyModule.js";
 
-const setResources = () => {
+// MERGING TOOLS AND WARRIORS ARRAY INTO ONE ARRAY
+const tools = ArmyModule.getTools;
+const warriors = ArmyModule.getWarriors;
+const armyInventory = [...warriors, ...tools];
+
+// LOCAL STORAGE SETTER FUNCTION
+const setArmyInventory = () => {
   const resources = ResourcesModule.getResources();
   if (!localStorage.getItem("resources")) {
+    localStorage.setItem("inventory", "[]");
     localStorage.setItem("resources", JSON.stringify(resources));
   }
 };
+setArmyInventory();
 
-setResources();
+// STORING LOCAL STORAGE ITEMS
+const resources = JSON.parse(localStorage.getItem("resources"));
+const inventory = JSON.parse(localStorage.getItem("inventory"));
 
-export const resources = JSON.parse(localStorage.getItem("resources"));
+// ADD TO ARMY INVENTORY
+const addArmyToInventory = (itemTitle) => {
+  const inventoryItem = armyInventory.filter(
+    (item) => item.categoryName === itemTitle
+  );
+
+  inventory.push(inventoryItem);
+  localStorage.setItem("inventory", JSON.stringify(inventory));
+};
 
 // UPDATE RESOURCE AMOUNT
-const updateAmount = (resourceType, action) => {
-  const resource = resources.find((res) => res.resourceType === resourceType);
+const updateResourceAmount = (resourceType, amount, action = "ICREAMENT") => {
+  const resource = resources.find(
+    (resource) => resource.resourceType === resourceType
+  );
 
-  console.log(resource);
   switch (action) {
     case "ICREAMENT":
-      resource.amount += 2000;
+      resource.amount += amount;
       break;
     case "DECREAMENT":
-      resource.amount -= 1000;
+      resource.amount -= amount;
       break;
     default:
-      console.log("Not here!");
+      console.log("Invalid Action, try again!");
   }
-
+  // Overwrite and update local storage with new value
   localStorage.setItem("resources", JSON.stringify(resources));
 };
 
-updateAmount("Gold", "ICREAMENT");
-updateAmount("Metal", "ICREAMENT");
-updateAmount("Gold", "DECREAMENT");
+// EXPORTING FUNCTIONS AND VARIABLES
+export { resources, inventory, updateResourceAmount, addArmyToInventory };

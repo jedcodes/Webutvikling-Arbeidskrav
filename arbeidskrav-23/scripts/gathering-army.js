@@ -1,6 +1,10 @@
 // IMPORTING MODULES
 import ArmyModule from "./modules/ArmyModule.js";
-import { resources } from "./utils/localStorage.js";
+import {
+  updateResourceAmount,
+  addArmyToInventory,
+} from "./utils/localStorage.js";
+import { createCardElements } from "./utils/htmlDOMElements.js";
 
 // HTML ELEMENTS
 const resourceSection = document.querySelector(".resources");
@@ -8,33 +12,18 @@ const warriorSection = document.querySelector(".warriors");
 const searchTerm = document.querySelector(".search__term");
 const searchButton = document.querySelector(".search__btn");
 
-// REUSEBLE FUNCTION THAT CREATES HTML ELEMENTS WITH BOOTSTRAP
-const createCardElements = (data) => {
-  return `
-    <div class="card" style="width: 18rem;">
-  <img src=${data.image} class="card-img-top" alt=${data.categoryName}>
-  <div class="card-body">
-    <h2 class="card-title">${data.categoryName}</h5>
-    <h5>${data.priceGold}</h5>
-    <a href="#" class="btn btn-primary">Buy</a>
-  </div>s
-</div>
-`;
-};
-
 const displayWarriorCards = () => {
   const cards = ArmyModule.getWarriors;
 
   let cardOutput = "";
-
   for (let card of cards) {
     cardOutput += createCardElements(card);
     warriorSection.innerHTML = cardOutput;
   }
 };
-
 displayWarriorCards();
 
+// SEARCH BAR FUNCTION
 const searchFilter = (term) => {
   const cards = ArmyModule.getWarriors;
 
@@ -43,7 +32,6 @@ const searchFilter = (term) => {
   });
 
   let cardOutput = "";
-
   for (let card of filteredCard) {
     cardOutput += createCardElements(card);
     warriorSection.innerHTML = cardOutput;
@@ -56,3 +44,13 @@ searchButton.addEventListener("click", (event) => {
   searchFilter(searchTerm.value);
   searchTerm.value = "";
 });
+
+[...document.querySelectorAll(".btn-buy")].forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    updateResourceAmount("Gold", e.target.title, "DECREAMENT");
+    addArmyToInventory(e.target.name);
+    console.log(e.target.title);
+  });
+});
+
+// REMOVE LATER: TIMEOUT FUNCTION TO ADD GOLD COINS

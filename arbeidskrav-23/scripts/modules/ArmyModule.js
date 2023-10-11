@@ -3,7 +3,7 @@ const ArmyModule = (() => {
     {
       categoryName: "Snake",
       priceGold: 200,
-      image: "../../images/warrior-1.jpg",
+      image: "./../images/warrior-1.jpg",
     },
     {
       categoryName: "Giant",
